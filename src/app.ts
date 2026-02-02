@@ -1,10 +1,8 @@
 import express from "express";
 
 const app = express();
-// const PORT = process.env.PORT || 3000;
-// const BRANCH = process.env.BRANCH_NAME || "unknown";
-const PORT = 3002;
-const BRANCH = "feat/profile";
+const PORT = process.env.PORT || 3000;
+const BRANCH = process.env.BRANCH_NAME || "unknown";
 
 app.use(express.json());
 
