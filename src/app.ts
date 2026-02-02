@@ -8,9 +8,9 @@ const BRANCH = "feat/profile";
 
 app.use(express.json());
 
-app.get("/", (_, res) => {
+app.get("/health", (_, res) => {
   res.json({
-    message: "Node app running",
+    message: `Node app running on ${BRANCH}`,
     branch: BRANCH,
     port: PORT,
   });
