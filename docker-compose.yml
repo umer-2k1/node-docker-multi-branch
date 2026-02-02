@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  app-feat-auth:
+    build: .
+    container_name: app-feat-auth
+    ports:
+      - 3000:3001
+    environment:
+      PORT: 3000
+      BRANCH_NAME: feat/auth
+    restart: unless-stopped
+
+  app-feat-profile:
+    build: .
+    container_name: app-feat-profile
+    ports:
+      - 3000:3002
+    environment:
+      PORT: 3000
+      BRANCH_NAME: feat/profile
+    restart: unless-stopped
+
+  app-feat-payment:
+    build: .
+    container_name: app-feat-payment
+    ports:
+      - 3000:3003
+    environment:
+      PORT: 3000
+      BRANCH_NAME: feat/payment
+    restart: unless-stopped
