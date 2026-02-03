@@ -12,14 +12,15 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      REGISTRY: ghcr.io
-      IMAGE_NAME: my-app
+      REGISTRY: ghcr.io # GitHub Container Registry
+      IMAGE_NAME: my-app # Docker image name
 
     steps:
+      # 1️⃣ Checkout the repo
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Set up Node
+      # 2️⃣ Set up Node 20
       - name: Setup Node 20
         uses: actions/setup-node@v3
         with:
@@ -34,19 +35,21 @@ jobs:
       - name: Build app
         run: yarn build
 
-      # 5️⃣ Log in to Docker (GHCR example)
+      # 5️⃣ Log in to GitHub Container Registry (GHCR)
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 6️⃣ Build Docker image
+      # 6️⃣ Build Docker image (fix branch name for Docker tag)
       - name: Build Docker image
         run: |
-          docker build -t $REGISTRY/${{ github.repository}}/$IMAGE_NAME:${{ github.ref_name }} .
+          TAG_NAME=${GITHUB_REF_NAME//\//-}  # replace '/' with '-' in branch names
+          docker build -t $REGISTRY/${{ github.repository}}/$IMAGE_NAME:$TAG_NAME .
 
-      # 7️⃣ Push Docker image
+      # 7️⃣ Push Docker image to GHCR
       - name: Push Docker image
         run: |
-          docker push $REGISTRY/${{ github.repository }}/$IMAGE_NAME:${{ github.ref_name }}
+          TAG_NAME=${GITHUB_REF_NAME//\//-}  # replace '/' with '-' in branch names
+          docker push $REGISTRY/${{ github.repository}}/$IMAGE_NAME:$TAG_NAME
