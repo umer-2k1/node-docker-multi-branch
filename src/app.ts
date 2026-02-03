@@ -15,7 +15,7 @@ app.get("/", (_, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 ${BRANCH} running on port ${PORT}`);
+  console.log(`🚀🚀 ${BRANCH} running on port ${PORT}`);
 });
 
 export default app;
